@@ -1,28 +1,99 @@
 # Tienda
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.0.
+<h2> Comunicacion Padre - Hijo</h2>
+Dado un Componente Padre y un componente hijo sea que el Hijo este contenido en el padre mediante su selector
 
-## Development server
+Podemos pasar data de Padre a Hijo si declaramos una variable @Input() en el Hijo 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+De tal manera que esta sera pasada a traves de los atributos del selector o directiva que esta contenida en el Padre
 
-## Code scaffolding
+<pre>
+  Declaramos la siguiente directiva y la inyectamos en el HTML del padre : 
+  
+  <app-parques [nombre]="nombreDelParque" [metros]="7431"></app-parques>
+ 
+  Donde nombre , metros son declaradas en el TS del componente Hijo:
+  
+  export class HijoComponent implements OnInit{
+    @Input() nombre;
+    @Input() metros: number;
+    
+    ...
+    
+  }
+  
+  Entonces nombre esta ligado a nombreDelParque que es una variable del Componente Padre
+  
+  export class PadreComponent implements OnInit {
+    public nombreDelParque: string;
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    ...
+  }
+  
+  De  esta manera se comunica el Padre al Hijo mediante una variable "Compartida"
+  
+  
+  Asi pues Ligamos una variable del Padre a una del Hijo.
 
-## Build
+</pre>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+<h2> Comunicacion Hijo Padre </h2>
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<pre>
 
-## Running end-to-end tests
+  Declaramos una variable de tipo Output la cual es una instancia de un EventEmitter
+  
+  export class HijoComponent implements OnInit {
+  
+   @Output() eventoDetonador = new EventEmitter();
+   
+   ...
+  }
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+  Luego inyectamos ese evento como atributo en la directiva Hija que se encuentra en el HTML del Padre
+  
+  <app-parques (eventoDetonador)="metodoPadreRecibidor($event)"></app-parques>
+  
+  Entonces:
+  
+  Configuramos un boton detonador del evento 
+  
+  <button (click)="enviarAlPadre()">Enviar al padre! </button>
+  
+  Donde enviarAlPadre emite un Objeto:
+  
+  export class PadreComponent implements OnInit {
+  
+ 
+    @Output() eventoDetonador = new EventEmitter();
+    ...
+    
+    enviarAlPadre() {
+      this.eventoDetonador.emit({
+        'nombre': this.nombre,
+        'metros': this.metros,
+        'vegetacion': this.vegetacion,
+        'abierto': this.abierto
+      });
+    }
+    
+    
+  }
+  
+  El objeto que mandamos con emit llega a traves del parametro $event de metodoPadreRecibidor($event)
+  
+  Donde el Padre decidira que hacer con ese Objeto
+  
+  export class PadreComponent implements OnInit {
+    public objeto: string;
 
-## Further help
+    metodoPadreRecibidor($event) {
+      this.objeto = $event;
+    }
+  }
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+  Asi pues enviamos un objeto desde el Hijo al Padre
+</pre>
+
