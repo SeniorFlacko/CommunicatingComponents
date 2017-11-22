@@ -10,7 +10,7 @@ De tal manera que esta sera pasada a traves de los atributos del selector o dire
 <pre>
   Declaramos la siguiente directiva y la inyectamos en el HTML del padre : 
   
-  "<app-parques [nombre]="nombreDelParque" [metros]="7431"></app-parques>"
+  <code><app-parques [nombre]="nombreDelParque" [metros]="7431"></app-parques></code>
  
   Donde nombre , metros son declaradas en el TS del componente Hijo:
   
