@@ -10,7 +10,7 @@ De tal manera que esta sera pasada a traves de los atributos del selector o dire
 <pre>
   Declaramos la siguiente directiva y la inyectamos en el HTML del padre : 
   
-  <app-parques [nombre]="nombreDelParque" [metros]="7431"></app-parques>
+  "<app-parques [nombre]="nombreDelParque" [metros]="7431"></app-parques>"
  
   Donde nombre , metros son declaradas en el TS del componente Hijo:
   
@@ -53,7 +53,7 @@ De tal manera que esta sera pasada a traves de los atributos del selector o dire
 
   Luego inyectamos ese evento como atributo en la directiva Hija que se encuentra en el HTML del Padre
   
-  <app-parques (eventoDetonador)="metodoPadreRecibidor($event)"></app-parques>
+  "<app-parques (eventoDetonador)="metodoPadreRecibidor($event)"></app-parques>"
   
   Entonces:
   
