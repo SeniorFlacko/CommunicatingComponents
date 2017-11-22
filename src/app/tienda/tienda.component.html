@@ -1,0 +1,15 @@
+<h2>Padre:</h2>
+<h1> {{ titulo }} </h1>
+
+<input type="text" [(ngModel)]="nombreDelParque"> {{ nombreDelParque }}
+
+<div *ngIf="nombreDelParque">
+    <h2>Hijo:</h2>
+    <app-parques [nombre]="nombreDelParque" [metros]="7431" (pasameLosDatos)="mostrarMiParque($event)"></app-parques>
+</div>
+
+<h3>Resultado de la comunicacion del hijo con el padre: </h3>
+<div *ngIf="miParque">
+        {{miParque | json}}
+    
+</div>
